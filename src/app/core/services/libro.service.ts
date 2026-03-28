@@ -8,7 +8,7 @@ import { Libro } from '../models/libro';
 })
 export class LibroService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:8080/api/libros'; // Tu endpoint de Spring Boot
+  private apiUrl = 'http://localhost:8081/api/libros'; // Tu endpoint de Spring Boot
 
   // GET: Obtener todos los libros (Conecta con tu nuevo @GetMapping)
   listar(): Observable<Libro[]> {

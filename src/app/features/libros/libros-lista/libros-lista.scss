@@ -1,0 +1,35 @@
+.tabla-container {
+    max-height: 450px; /* Altura máxima antes de mostrar el scroll */
+    overflow-y: auto;  /* Scroll vertical automático */
+    display: block;
+    padding-bottom: 15px;    /* <--- Este espacio extra evita que la última fila se corte */
+    border-bottom: 1px solid #dee2e6; /* Una línea sutil para cerrar la tabla */
+    
+    // Personalización del scrollbar para que se vea más moderno (Chrome/Safari)
+    &::-webkit-scrollbar {
+        width: 8px;
+    }
+    &::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+    &::-webkit-scrollbar-thumb {
+        background: #0d6efd; /* Color azul de Bootstrap */
+        border-radius: 4px;
+    }
+    &::-webkit-scrollbar-thumb:hover {
+        background: #0a58ca;
+    }
+}
+
+// Para que la cabecera de la tabla se quede quieta al bajar (Sticky Header)
+thead {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+// celdas tengan un alto consistente
+.table td {
+    vertical-align: middle;
+    height: 60px; /* Esto ayuda a que el scroll calcule mejor el espacio */
+}

@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { LibroService } from '../../../core/services/libro.service';
@@ -7,42 +7,36 @@ import { Libro } from '../../../core/models/libro';
 @Component({
   selector: 'app-libros-lista',
   standalone: true,
-  // Importamos CommonModule para usar *ngFor y RouterLink para navegar [cite: 629, 796]
-  imports: [CommonModule, RouterLink], 
+  imports: [CommonModule, RouterLink],
   templateUrl: './libros-lista.html',
-  styleUrl: './libros-lista.scss'
+  styleUrl: './libros-lista.scss',
 })
 export class LibrosListaComponent implements OnInit {
-  private libroService = inject(LibroService); // Inyectamos el servicio 
-  
   libros: Libro[] = [];
-  cargando = false;
-  error = '';
+
+  constructor(private libroService: LibroService) {}
 
   ngOnInit(): void {
-    this.cargarLibros(); // Se ejecuta al cargar el componente 
+    this.listar();
   }
 
-  cargarLibros(): void {
-    this.cargando = true;
+  listar(): void {
     this.libroService.listar().subscribe({
       next: (data) => {
-        this.libros = data; // Guardamos los libros del backend 
-        this.cargando = false;
+        this.libros = data;
       },
-      error: () => {
-        this.error = 'No se pudieron cargar los libros desde la base de datos Oracle.'; 
-        this.cargando = false;
-      }
+      error: (err) => console.error('Error al cargar libros', err),
     });
   }
 
-  eliminar(id?: number): void {
-    if (id && confirm('¿Estás seguro de eliminar este libro?')) { 
+  eliminar(id: number): void {
+    if (confirm('¿Estás seguro de eliminar este libro?')) {
       this.libroService.eliminar(id).subscribe({
-        next: () => this.cargarLibros(), // Recargamos la lista tras eliminar 
-        error: () => this.error = 'Error al intentar eliminar el libro.' 
+        next: () => {
+          this.libros = this.libros.filter((l) => l.id !== id);
+        },
+        error: (err) => alert('Error al eliminar: ' + err),
       });
     }
   }
-}
+} // <--- Esta es la ÚLTIMA llave del archivo. No debe haber nada más después.
