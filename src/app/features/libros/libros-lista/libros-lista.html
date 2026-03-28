@@ -1,0 +1,40 @@
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Biblioteca Duoc UC</h2>
+    <a routerLink="/libros/nuevo" class="btn btn-success">+ Nuevo Libro</a>
+  </div>
+
+  <div *ngIf="cargando" class="alert alert-info">Cargando datos desde Oracle...</div>
+
+  <table class="table table-striped table-hover shadow-sm" *ngIf="libros.length > 0">
+    <thead class="table-dark">
+      <tr>
+        <th>ID</th>
+        <th>Título</th>
+        <th>Autor</th>
+        <th>Año de Publicación</th>
+        <th>Género</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let libro of libros">
+        <td>{{ libro.id }}</td>
+        <td>{{ libro.titulo }}</td>
+        <td>{{ libro.autor }}</td>
+        <td>{{ libro.anioPublicacion }}</td>
+        <td>{{ libro.genero }}</td>
+        <td>
+          <div class="btn-group">
+            <a [routerLink]="['/libros/editar', libro.id]" class="btn btn-sm btn-warning">Editar</a>
+            <button (click)="eliminar(libro.id)" class="btn btn-sm btn-danger">Eliminar</button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="!cargando && libros.length === 0" class="alert alert-warning">
+    No se encontraron libros en la base de datos.
+  </div>
+</div>
