@@ -10,23 +10,29 @@
           <label class="form-label">Título</label>
           <input type="text" class="form-control" formControlName="titulo" 
                  [class.is-invalid]="libroForm.get('titulo')?.invalid && libroForm.get('titulo')?.touched">
-          <div class="invalid-feedback">El título es obligatorio.</div>
+          <div class="invalid-feedback">El título es obligatorio (mín. 2 letras).</div>
         </div>
 
         <div class="mb-3">
           <label class="form-label">Autor</label>
           <input type="text" class="form-control" formControlName="autor"
                  [class.is-invalid]="libroForm.get('autor')?.invalid && libroForm.get('autor')?.touched">
+                 <div class="invalid-feedback">El nombre del autor es obligatorio.</div>
         </div>
 
         <div class="row">
           <div class="col-md-6 mb-3">
             <label class="form-label">Año de Publicación</label>
-            <input type="number" class="form-control" formControlName="anioPublicacion">
+            <input type="number" class="form-control" formControlName="anioPublicacion"
+                [class.is-invalid]="libroForm.get('anioPublicacion')?.invalid && libroForm.get('anioPublicacion')?.touched">
+            <div class="invalid-feedback">Año inválido (mínimo 1000).</div>
           </div>
+
           <div class="col-md-6 mb-3">
             <label class="form-label">Género</label>
-            <input type="text" class="form-control" formControlName="genero">
+            <input type="text" class="form-control" formControlName="genero"
+                [class.is-invalid]="libroForm.get('genero')?.invalid && libroForm.get('genero')?.touched">
+            <div class="invalid-feedback">El género es obligatorio.</div>
           </div>
         </div>
 

@@ -2,6 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Libro } from '../models/libro';
+import { catchError, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -12,8 +13,14 @@ export class LibroService {
 
   // GET: Obtener todos los libros (Conecta con tu nuevo @GetMapping)
   listar(): Observable<Libro[]> {
-    return this.http.get<Libro[]>(this.apiUrl); 
+    return this.http.get<Libro[]>(this.apiUrl).pipe(
+      catchError((err) => {
+        console.error('Error en la comunicación con Spring Boot', err);
+        return throwError(() => new Error('No se pudo conectar con el servidor'));
+      }),
+    );
   }
+
   // GET: Obtener un libro por ID (usando el @GetMapping("/{id}") de tu Controller)
   getLibro(id: number): Observable<Libro> {
     return this.http.get<Libro>(`${this.apiUrl}/${id}`);

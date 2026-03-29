@@ -48,7 +48,9 @@ export class LibroFormComponent implements OnInit {
 
     if (this.idActual) {
       // Editar: Llama al @PutMapping("/{id}") de tu Java
-      this.libroService.actualizar(this.idActual, libro).subscribe(() => {
+      // Nos aseguramos de que el objeto tenga el ID correcto antes de enviar el PUT
+      const libroEditado: Libro = { ...libro, id: this.idActual };
+      this.libroService.actualizar(this.idActual, libroEditado).subscribe(() => {
         this.router.navigate(['/libros']);
       });
     } else {
